@@ -1,0 +1,9 @@
+POST http://127.0.0.1:5000/rank HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4MzIzNTM1NiwianRpIjoiNzVhNTdjMjEtMzEyMC00Njg3LTk1NjItMzM4NjQ0MDQ1MDhkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im1hdCIsIm5iZiI6MTY4MzIzNTM1NiwiZXhwIjoxNjgzMjM2MjU2fQ.U5VY_69Wv-l8169yMEPlvOVOx4aFBedTA8smQl3TYYU
+Content-Type: application/json
+Cookie: key=first-value
+
+{
+  "list_rank":"[(1,5),(2,5)]",
+  "number_questions": 2
+}
