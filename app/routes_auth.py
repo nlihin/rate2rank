@@ -1,7 +1,10 @@
 from flask import Blueprint, request, jsonify
 from app.models import User
 from app import db, jwt
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, get_jwt
+from flask_cors import CORS, cross_origin
+from flask import make_response
+import datetime
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import current_user
@@ -10,6 +13,7 @@ auth = Blueprint('auth', __name__)
 
 
 @auth.route('/register', methods=['POST'])
+@cross_origin()
 def register():
     new_user = User(username=request.json.get('username'),
                     name=request.json.get('name'),
@@ -23,6 +27,15 @@ def register():
     return jsonify(status=400, msg='Please check that username == password ')
 
 
+@auth.route('/login', methods=['OPTIONS'])
+def handle_options():
+    response = make_response()
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+    # response.headers.add('Access-Control-Allow-Methods', 'POST')
+    return response
+
+@cross_origin()
 @auth.route("/login", methods=["POST"])
 def login():
     username = request.json.get("username", None)
@@ -32,6 +45,8 @@ def login():
 
     if current_user and password == current_user.password:
         access_token = create_access_token(identity=username)
+        # current_token = get_jwt()
+        # current_token['exp'] += datetime.timedelta(hours=1)
         return jsonify(access_token=access_token, status=200)
 
     return jsonify(msg="Bad username or password", status=400)
