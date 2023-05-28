@@ -24,7 +24,7 @@ def register():
         db.session.commit()
         return jsonify(status=200)
 
-    return jsonify(status=400, msg='Please check that username == password ')
+    return jsonify(status=400, msg='Please check that username == password '), 400
 
 
 @auth.route('/login', methods=['OPTIONS'])
@@ -49,7 +49,7 @@ def login():
         # current_token['exp'] += datetime.timedelta(hours=1)
         return jsonify(access_token=access_token, status=200)
 
-    return jsonify(msg="Bad username or password", status=400)
+    return jsonify(msg="Bad username or password", status=400), 400
 
 
 # Register a callback function that takes whatever object is passed in as the
