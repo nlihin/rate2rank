@@ -11,7 +11,8 @@ rate = Blueprint('rate', __name__)
 @rate.route('/rate', methods=['GET'])
 @jwt_required()
 def get_groups():
-    group_name = db.session.query(Group).filter_by(number=request.headers.get('group_number')).one_or_none()
+    print(request.url)
+    group_name = db.session.query(Group).filter_by(number=request.args.get('group_number')).one_or_none()
     # if group valid
     if group_name:
         questions = {q.number: q.description for q in Question.query.all()}
