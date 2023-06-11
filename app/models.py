@@ -33,6 +33,7 @@ class Question(db.Model):
     number = db.Column(db.Integer(), nullable=False, unique=True)
     description = db.Column(db.String(length=1024), nullable=False, unique=True)
 
+
 class QuestionAnswer(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), primary_key=False)
@@ -63,5 +64,3 @@ class Rank(db.Model):
     list_rank = db.Column(db.String(length=1024), nullable=True)
     number_questions = db.Column(db.Integer(), nullable=False, default=0)
     experiment_group = db.Column(db.Integer(), nullable=False, default=1)
-
-
