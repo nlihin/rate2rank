@@ -10,6 +10,11 @@ if __name__ == '__main__':
                         email_address = 'matanlange@gmail.com',
                         password = 'test1'))
 
+    db.session.add(User(username='shira',
+                        name='shira perso',
+                        email_address='matanlange@gmail.com',
+                        password='123432452345'))
+
     user = User(username = '313388241',
                         name = 'mat',
                         email_address = 'matanlange@gmail.com',

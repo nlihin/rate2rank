@@ -1,10 +1,9 @@
 from flask import Blueprint, request, jsonify
 from app import db
-from app.models import Group, Rate, Question, CrowdRating, Rank
+from app.models import Group, Rate, Question, CrowdRating, Rank, QuestionAnswer
 from flask_jwt_extended import current_user, jwt_required
 
 from datetime import datetime
-
 
 rate = Blueprint('rate', __name__)
 
@@ -28,6 +27,7 @@ def get_groups():
 def rate_page():
     data = request.json.get('data')
     group_number = data['group_number']
+    text_answer = data['text_answer']
 
     rate = Rate(username=current_user.username,
                 group_number=group_number,
@@ -44,12 +44,20 @@ def rate_page():
                                 fair=crowd_ratings['fair'],
                                 needs_improvement=crowd_ratings['needs_improvement'])
 
+    # add users answers
+    questions_numbers = {q.number for q in Question.query.all()}
+    for q_num in questions_numbers:
+        q_add = QuestionAnswer(user_id=current_user.username,
+                               question_number=int(q_num),
+                               text_answer=text_answer[str(q_num)])
+        db.session.add(q_add)
+
     db.session.add(rate)
     db.session.add(crowd_ratings)
     db.session.commit()
 
     # ranking
-    #ToDo add check if same rates
+    # ToDo add check if same rates
     exs_rank = Rank.query.filter_by(username=current_user.username, date=datetime.today().date()).first()
 
     # if users first input insert ranking to db
@@ -61,7 +69,3 @@ def rate_page():
         return jsonify(status=200, ranking=False)
     else:
         return jsonify(status=200, ranking=True, data={"rank_list": exs_rank.list_rank})
-
-
-
-

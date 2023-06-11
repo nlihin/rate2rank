@@ -33,6 +33,12 @@ class Question(db.Model):
     number = db.Column(db.Integer(), nullable=False, unique=True)
     description = db.Column(db.String(length=1024), nullable=False, unique=True)
 
+class QuestionAnswer(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), primary_key=False)
+    question_number = db.Column(db.Integer(), nullable=False, unique=True)
+    text_answer = db.Column(db.String(length=1024), nullable=False, unique=True)
+
 
 class Rate(db.Model):
     username = db.Column(db.String(), nullable=False, primary_key=True)
