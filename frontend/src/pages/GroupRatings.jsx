@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useParams, json, redirect, useNavigate } from "react-router-dom";
 
 import BasicModal from "../components/BasicModal";
+import QesCardTwo from "../components/QesCardTwo";
 import QesCard from "../components/QesCard";
+import ExtraQus from "../components/ExtraQus";
+
 import { tokenLoader } from "../utlis/auth";
 import {
   parseGroupsConflict,
@@ -24,6 +27,7 @@ const GroupRatings = () => {
   const [groupData, setGroupData] = useState();
   const [crowdRatingsData, setCrowdRatingsData] = useState();
   const [groupRatingsData, setGroupRatingsData] = useState();
+  const [otherQuestionsData, setOtherQuestionsData] = useState({});
   const [isConflict, setIsConflict] = useState(false);
   const [dataConflict, setDataConflict] = useState();
   const [questions, setQuestions] = useState(["hey", "roi", "yoni"]);
@@ -38,7 +42,7 @@ const GroupRatings = () => {
       const baseURL = "http://127.0.0.1:5000/";
       const groupNum = params.groupId;
       let groupResData;
-      let groupRes = await fetch(baseURL + "rate/" + groupNum, {
+      let groupRes = await fetch(`${baseURL}/rate?group_number=${groupNum}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -76,6 +80,12 @@ const GroupRatings = () => {
     setCrowdRatingsData(crowdRatings);
   };
 
+  const otherQuestionsHandler = (questionNumber, rating) => {
+    let otherQuestionsTemp = otherQuestionsData;
+    otherQuestionsTemp[questionNumber] = rating;
+    setOtherQuestionsData({ ...otherQuestionsTemp });
+  };
+
   const validateGroupRating = () => {
     const totalRating = Object.values(crowdRatingsData).reduce(
       (acc, curr) => acc + curr,
@@ -104,6 +114,7 @@ const GroupRatings = () => {
         group_number: parseInt(params.groupId),
         rate: groupRatingsData,
         crowd_ratings: crowdRatingsData,
+        answer: otherQuestionsData,
       },
     };
     console.log(ratingBody);
@@ -161,14 +172,10 @@ const GroupRatings = () => {
           {groupData?.questions &&
             Object.keys(groupData?.questions).map((questionNum) => {
               return (
-                <QesCard
-                  userEvaluation={false}
+                <ExtraQus
                   questionNum={questionNum}
-                  question={groupData.questions[questionNum]}
-                  rankHandler={(param1, param2) => {
-                    console.log(param1, param2);
-                  }}
-                  otherRatings={true}
+                  question={"dsadsadsd"}
+                  rankHandler2={otherQuestionsHandler}
                 />
               );
             })}

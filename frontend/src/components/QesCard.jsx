@@ -45,6 +45,7 @@ const QesCard = ({
   const crowdGroupRatingHandler = (e) => {
     let tempCrowdRatings = { ...crowdRating };
     tempCrowdRatings[`${e.target.id}`] = parseInt(e.target.value);
+
     // let sumRatings = 0;
 
     // for (let key in tempCrowdRatings) {
@@ -151,11 +152,13 @@ const QesCard = ({
               </label>
             </div>
           </UserRatingsContainer>
-          <textarea
-            rows="4"
-            style={{ width: "100%", textAlign: "left" }}
-            placeholder="Your feedback"
-          ></textarea>
+          {otherRatings && (
+            <textarea
+              rows="4"
+              style={{ width: "100%", textAlign: "left" }}
+              placeholder="Your feedback"
+            ></textarea>
+          )}
         </UserRatingsWarrper>
       )}
       {otherRatings && (
