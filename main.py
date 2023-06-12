@@ -5,20 +5,13 @@ if __name__ == '__main__':
     app.app_context().push()
     db.drop_all()
     db.create_all()
-    db.session.add(User(username = 'mat',
-                        name = 'mat',
-                        email_address = 'matanlange@gmail.com',
-                        password = 'test1'))
 
-    db.session.add(User(username='shira',
-                        name='shira perso',
-                        email_address='matanlange@gmail.com',
-                        password='123432452345'))
 
     user = User(username = '313388241',
                         name = 'mat',
                         email_address = 'matanlange@gmail.com',
                         password = '313388241')
+    db.session.add(user)
 
     print(user.validate_password())
     print(user.validate_username())

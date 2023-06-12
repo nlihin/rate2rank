@@ -1,5 +1,5 @@
 POST http://127.0.0.1:5000/rate HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NjUxNDI0MSwianRpIjoiMmU1NTljZTktYzU5NC00OTVjLTgyM2YtMzc0NTBmNDFlMWMyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im1hdCIsIm5iZiI6MTY4NjUxNDI0MSwiZXhwIjoxNjg2NTE1MTQxfQ.dIyRhvj6ppINcHIP8WQ8iY6T5Y3RXqiFEo5XBh_CBaE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NjU5NjAyMCwianRpIjoiNDkyZmVkMTEtNWNjYS00YjQyLTlkMjktNDkxZDJjY2I5YzNlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMxMzM4ODI0MSIsIm5iZiI6MTY4NjU5NjAyMCwiZXhwIjoxNjg2NTk2OTIwfQ.CL_m7U9AgXlc1YIuDJqxBPOviHXxAzk_J68QGLdY0sE
 Content-Type: application/json
 Cookie: key=first-value
 
@@ -14,7 +14,7 @@ Cookie: key=first-value
         "fair": 20,
         "needs_improvement": 20
     },
-    "text_answer": {"1": "some text" , "2": "some_other_text"}
+    "answer": {"1": 1 , "2": 1}
   }
 }
 

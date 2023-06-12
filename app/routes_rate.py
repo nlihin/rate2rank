@@ -28,7 +28,7 @@ def get_groups():
 def rate_page():
     data = request.json.get('data')
     group_number = data['group_number']
-    text_answer = data['text_answer']
+    answer = data['answer']
 
     rate = Rate(username=current_user.username,
                 group_number=group_number,
@@ -48,9 +48,9 @@ def rate_page():
     # add users answers
     questions_numbers = {q.number for q in Question.query.all()}
     for q_num in questions_numbers:
-        q_add = QuestionAnswer(user_id=current_user.username,
+        q_add = QuestionAnswer(user_id=int(current_user.username),
                                question_number=int(q_num),
-                               text_answer=text_answer[str(q_num)])
+                               answer=answer[str(q_num)])
         db.session.add(q_add)
 
     db.session.add(rate)

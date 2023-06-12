@@ -38,7 +38,7 @@ class QuestionAnswer(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), primary_key=False)
     question_number = db.Column(db.Integer(), nullable=False, unique=True)
-    text_answer = db.Column(db.String(length=1024), nullable=False, unique=True)
+    answer = db.Column(db.Integer(), nullable=False, unique=False)
 
 
 class Rate(db.Model):
