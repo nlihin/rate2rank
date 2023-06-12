@@ -37,7 +37,7 @@ class Question(db.Model):
 class QuestionAnswer(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), primary_key=False)
-    question_number = db.Column(db.Integer(), nullable=False, unique=True)
+    question_number = db.Column(db.Integer(), nullable=False, unique=False)
     answer = db.Column(db.Integer(), nullable=False, unique=False)
 
 
