@@ -173,8 +173,9 @@ const GroupRatings = () => {
             Object.keys(groupData?.questions).map((questionNum) => {
               return (
                 <ExtraQus
+                  key={questionNum}
                   questionNum={questionNum}
-                  question={"dsadsadsd"}
+                  question={groupData.questions[questionNum]}
                   rankHandler2={otherQuestionsHandler}
                 />
               );
