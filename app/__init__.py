@@ -4,7 +4,7 @@ from flask_cors import CORS,cross_origin
 from flask_jwt_extended import JWTManager
 import datetime
 
-app = Flask(__name__,static_folder='../frontend/build',static_url_path='')
+app = Flask(__name__,static_folder='/frontend/build',static_url_path='')
 cors = CORS(app, origins='http://localhost:3000', supports_credentials=True, allow_headers=["Content-Type", "Authorization"], methods=["GET", "POST"])
 
 
@@ -31,7 +31,7 @@ app.register_blueprint(rank)
 from flask.helpers import send_from_directory
 
 
-# @app.route('/')
-# @cross_origin()
-# def serve():
-#     return send_from_directory(app.static_folder,'index.html')
+@app.route('/')
+@cross_origin()
+def serve():
+    return send_from_directory(app.static_folder,'index.html')
