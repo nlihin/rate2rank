@@ -39,7 +39,7 @@ const GroupRatings = () => {
   useEffect(() => {
     const getGroupData = async () => {
       const token1 = tokenLoader();
-      const baseURL = "http://127.0.0.1:5000/";
+      const baseURL = "https://rate2rank-0d561bf6674a.herokuapp.com/";
       const groupNum = params.groupId;
       let groupResData;
       let groupRes = await fetch(`${baseURL}/rate?group_number=${groupNum}`, {
@@ -118,7 +118,7 @@ const GroupRatings = () => {
       },
     };
     console.log(ratingBody);
-    const baseURL = "http://127.0.0.1:5000/";
+    const baseURL = "https://rate2rank-0d561bf6674a.herokuapp.com/";
     // TODO: save base url in constants and import
     let res = await fetch(baseURL + "rate", {
       method: "POST",

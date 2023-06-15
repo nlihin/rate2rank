@@ -10,7 +10,7 @@ import { ConflictBtn } from "./ConflictMessageStyles";
 
 const getGroupData = async (groupNum) => {
   const token1 = tokenLoader();
-  const baseURL = "http://127.0.0.1:5000/";
+  const baseURL = "https://rate2rank-0d561bf6674a.herokuapp.com/";
   let groupResDate;
   let groupRes = await fetch(baseURL + "rate/" + groupNum, {
     method: "GET",
@@ -71,7 +71,7 @@ const ConflictMessage = ({
   }, [groups]);
 
   const finishConflict = async (orderdConflict) => {
-    const baseURL = "http://127.0.0.1:5000/";
+    const baseURL = "https://rate2rank-0d561bf6674a.herokuapp.com/";
     const tok = tokenLoader();
 
     let result = [...firstTempGroups, ...orderdConflict, ...thirdTempGroups];

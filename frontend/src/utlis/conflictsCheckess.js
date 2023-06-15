@@ -16,7 +16,7 @@ export const conflictsChecks = async (
     }
   });
   console.log(3);
-  const baseURL = "http://127.0.0.1:5000/";
+  const baseURL = "https://rate2rank-0d561bf6674a.herokuapp.com/";
   let firstTempGroups = convertedGroups?.slice(0, indexs[0]);
   let secondTempGroups = convertedGroups?.slice(indexs[0], indexs.length);
   let thirdTempGroups = convertedGroups?.slice(indexs.length);

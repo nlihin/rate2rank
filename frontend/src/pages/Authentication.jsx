@@ -42,7 +42,7 @@ export const action = async ({ request }) => {
     };
   }
   console.log(5);
-  const res = await fetch("http://127.0.0.1:5000/" + mode, {
+  const res = await fetch("https://rate2rank-0d561bf6674a.herokuapp.com/" + mode, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

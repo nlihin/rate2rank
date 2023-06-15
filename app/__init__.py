@@ -31,7 +31,7 @@ app.register_blueprint(rank)
 from flask.helpers import send_from_directory
 
 
-@app.route('/')
-@cross_origin()
-def serve():
-    return send_from_directory(app.static_folder,'index.html')
+# @app.route('/')
+# @cross_origin()
+# def serve():
+#     return send_from_directory(app.static_folder,'index.html')
