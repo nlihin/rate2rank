@@ -1,3 +1,5 @@
 /instance
 app/__pycache__/
 .idea
+frontend/node_modules
+frontend/.vscode
