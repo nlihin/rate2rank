@@ -3,12 +3,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
 from flask_jwt_extended import JWTManager
 import datetime
+import os
 
 app = Flask(__name__,static_folder='../frontend/build',static_url_path='')
 cors = CORS(app, origins='http://localhost:3000', supports_credentials=True, allow_headers=["Content-Type", "Authorization"], methods=["GET", "POST"])
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///rank2rate.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SECRET_KEY'] = 'asdfla234509sdflsdf235'
 app.config["JWT_SECRET_KEY"] = "super-secret"
 app.config['DEBUG'] = True
