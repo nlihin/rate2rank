@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { reverseParseGroupsConflict } from "../utlis/parsing";
-import { conflictsChecks } from "../utlis/conflictsCheckess";
+// import { conflictsChecks } from "../utlis/conflictsCheckess";
 import { parseGroupsConflict } from "../utlis/parsing";
 import { tokenLoader } from "../utlis/auth";
-import { json, redirect } from "react-router-dom";
+import { json } from "react-router-dom";
 
 import { ConflictBtn } from "./ConflictMessageStyles";
+import { BaseURL } from "../routes/url";
 
 const getGroupData = async (groupNum) => {
   const token1 = tokenLoader();
-  const baseURL = "http://127.0.0.1:5000/";
   let groupResDate;
-  let groupRes = await fetch(baseURL + "rate/" + groupNum, {
+  let groupRes = await fetch(BaseURL + "rate/" + groupNum, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -46,14 +46,14 @@ const ConflictMessage = ({
   const [orderedConflictGroups, setOrderedConflictGroups] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [displayConflictNameGroup, setDisplayConflictNameGroup] = useState();
+  const [numberOfPromp, setNumberOfPromp] = useState(0);
+
   const displayNameGroup = async (groupNum) => {
     let ConflictNameGroup = await getGroupData(groupNum);
     setDisplayConflictNameGroup(ConflictNameGroup);
   };
 
-  console.log(groups);
   useEffect(() => {
-    console.log(2);
     const convertedGroups = parseGroupsConflict(groups);
     const indexs = [];
     convertedGroups?.forEach((group, index) => {
@@ -68,21 +68,18 @@ const ConflictMessage = ({
     setThirdTempGroups(convertedGroups?.slice(indexs.length));
     setCurrentIndex(0);
     displayNameGroup(tempGrops[0][0]);
-  }, [groups]);
+  }, [groups]); //changes
 
-  const finishConflict = async (orderdConflict) => {
-    const baseURL = "http://127.0.0.1:5000/";
+  const finishConflict = async (orderdConflict, numberOfPrompex) => {
     const tok = tokenLoader();
 
     let result = [...firstTempGroups, ...orderdConflict, ...thirdTempGroups];
-    console.log(result);
     const orderedConflict = reverseParseGroupsConflict(result);
-    console.log(orderedConflict);
     let payload = {
       list_rank: orderedConflict,
-      number_questions: 1,
+      number_questions: numberOfPrompex,
     };
-    let res = await fetch(baseURL + "rank", {
+    let res = await fetch(BaseURL + "rank", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -96,12 +93,14 @@ const ConflictMessage = ({
   };
 
   const lowerRatings = () => {
+    let tempNumQus = numberOfPromp + 1;
+    setNumberOfPromp(tempNumQus);
     let orderdConflict = orderedConflictGroups;
     orderdConflict.push(secondTempGroups[currentIndex]);
     if (currentIndex === secondTempGroups.length - 1) {
       orderdConflict.push([currentGroup, groupRatingsData]);
       setOrderedConflictGroups(orderdConflict);
-      finishConflict(orderdConflict);
+      finishConflict(orderdConflict, tempNumQus);
     } else {
       setOrderedConflictGroups(orderdConflict);
     }
@@ -111,21 +110,19 @@ const ConflictMessage = ({
     // setAnswer(false);
   };
   const higherRatings = () => {
+    let tempNumQus = numberOfPromp + 1;
+    setNumberOfPromp(tempNumQus);
     let orderdConflict = orderedConflictGroups;
-    console.log(currentIndex);
-    console.log(secondTempGroups.slice(currentIndex));
 
     orderdConflict.push([parseInt(currentGroup), groupRatingsData]);
     orderdConflict = [
       ...orderdConflict,
       ...secondTempGroups.slice(currentIndex),
     ];
-    console.log(orderdConflict);
-    setOrderedConflictGroups(orderdConflict);
-    finishConflict(orderdConflict);
+    setOrderedConflictGroups(orderdConflict, tempNumQus);
+    finishConflict(orderdConflict, tempNumQus);
     // setAnswer(true);
   };
-  console.log(displayConflictNameGroup);
   return (
     <div
       style={{
@@ -138,7 +135,6 @@ const ConflictMessage = ({
     >
       <h2 style={{ color: "#000" }}>
         You gave the same evaluation to team:
-        {console.log(secondTempGroups[currentIndex])}
         {/* {displayNameGroup(secondTempGroups[currentIndex][0])} */}
         {secondTempGroups?.length > 0 ? (
           <span>

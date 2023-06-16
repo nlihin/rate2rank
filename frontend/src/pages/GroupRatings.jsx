@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, json, redirect, useNavigate } from "react-router-dom";
+import { Link, useParams, json, useNavigate } from "react-router-dom";
 
 import BasicModal from "../components/BasicModal";
-import QesCardTwo from "../components/QesCardTwo";
+// import QesCardTwo from "../components/QesCardTwo";
 import QesCard from "../components/QesCard";
 import ExtraQus from "../components/ExtraQus";
 
 import { tokenLoader } from "../utlis/auth";
-import {
-  parseGroupsConflict,
-  reverseParseGroupsConflict,
-} from "../utlis/parsing";
-import { ConflictMessageFunc } from "../utlis/conflictsCheck";
+import { BaseURL } from "../routes/url";
+// import {
+//   parseGroupsConflict,
+//   reverseParseGroupsConflict,
+// } from "../utlis/parsing";
+// import { ConflictMessageFunc } from "../utlis/conflictsCheck";
 
 import {
   Warpper,
@@ -30,7 +31,7 @@ const GroupRatings = () => {
   const [otherQuestionsData, setOtherQuestionsData] = useState({});
   const [isConflict, setIsConflict] = useState(false);
   const [dataConflict, setDataConflict] = useState();
-  const [questions, setQuestions] = useState(["hey", "roi", "yoni"]);
+  // const [questions, setQuestions] = useState(["hey", "roi", "yoni"]);
   const [modalToggle, setModalToggle] = useState(false);
   const [modalText, setModalText] = useState();
 
@@ -39,10 +40,9 @@ const GroupRatings = () => {
   useEffect(() => {
     const getGroupData = async () => {
       const token1 = tokenLoader();
-      const baseURL = "http://127.0.0.1:5000/";
       const groupNum = params.groupId;
       let groupResData;
-      let groupRes = await fetch(`${baseURL}/rate?group_number=${groupNum}`, {
+      let groupRes = await fetch(`${BaseURL}/rate?group_number=${groupNum}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +63,6 @@ const GroupRatings = () => {
         );
       }
       groupResData = await groupRes.json();
-      console.log(groupResData.data);
       setGroupData(groupResData.data);
     };
     getGroupData();
@@ -75,7 +74,6 @@ const GroupRatings = () => {
   };
 
   const groupDataHandler = (rating, crowdRatings) => {
-    // console.log(rating, crowdRatings);
     setGroupRatingsData(rating);
     setCrowdRatingsData(crowdRatings);
   };
@@ -117,10 +115,8 @@ const GroupRatings = () => {
         answer: otherQuestionsData,
       },
     };
-    console.log(ratingBody);
-    const baseURL = "http://127.0.0.1:5000/";
     // TODO: save base url in constants and import
-    let res = await fetch(baseURL + "rate", {
+    let res = await fetch(BaseURL + "rate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -136,16 +132,13 @@ const GroupRatings = () => {
       throw json({ message: "Could not authenticate user." }, { status: 500 });
     }
     const resData = await res.json();
-    console.log(resData);
     if (resData.ranking) {
-      console.log(5464646);
       setIsConflict(true);
       setDataConflict(resData?.data?.rank_list);
     } else {
       return navigate("/");
     }
   };
-  console.log(groupData);
   return (
     <Warpper>
       {modalToggle && <BasicModal text={modalText} close={setModalToggle} />}

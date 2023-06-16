@@ -3,7 +3,7 @@ import { json, redirect } from "react-router-dom";
 import AuthForm from "../components/AuthForm";
 import { Warpper } from "./AuthenticationStyles";
 import BasicModal from "../components/BasicModal";
-import { useEffect } from "react";
+import { BaseURL } from "../routes/url";
 
 const Authentication = () => {
   const [modalToggle, setModalToggle] = useState(false);
@@ -41,8 +41,7 @@ export const action = async ({ request }) => {
       name: data.get("name"),
     };
   }
-  console.log(5);
-  const res = await fetch("http://127.0.0.1:5000/" + mode, {
+  const res = await fetch(BaseURL + mode, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
