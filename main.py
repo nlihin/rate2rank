@@ -13,13 +13,15 @@ if __name__ == '__main__':
                         password = '313388241')
     db.session.add(user)
 
-    print(user.validate_password())
-    print(user.validate_username())
     db.session.add(Group(number=1,name='test1'))
     db.session.add(Group(number=2, name='test2'))
+    db.session.add(Group(number=3, name='test3'))
+    db.session.add(Group(number=4, name='test4'))
 
-    db.session.add(Question(number=1, description='some Question test '))
-    db.session.add(Question(number=2, description='some Question test 3  '))
+    db.session.add(Question(number=1, description='some Question test 1'))
+    db.session.add(Question(number=2, description='some Question test 2 '))
+    db.session.add(Question(number=3, description='some Question test 3 '))
+    db.session.add(Question(number=4, description='some Question test 4 '))
 
     db.session.commit()
     app.run()
