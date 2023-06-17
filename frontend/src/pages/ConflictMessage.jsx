@@ -12,7 +12,7 @@ import { BaseURL } from "../routes/url";
 const getGroupData = async (groupNum) => {
   const token1 = tokenLoader();
   let groupResDate;
-  let groupRes = await fetch(BaseURL + "rate/" + groupNum, {
+  let groupRes = await fetch(`${BaseURL}/rate?group_number=${groupNum}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -68,7 +68,7 @@ const ConflictMessage = ({
     setThirdTempGroups(convertedGroups?.slice(indexs.length));
     setCurrentIndex(0);
     displayNameGroup(tempGrops[0][0]);
-  }, [groups]); //changes
+  }, [groups, groupRatingsData]); //changes
 
   const finishConflict = async (orderdConflict, numberOfPrompex) => {
     const tok = tokenLoader();

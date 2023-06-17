@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, json, useNavigate } from "react-router-dom";
+import { parseGroupsConflict } from "../utlis/parsing";
 
 import BasicModal from "../components/BasicModal";
 // import QesCardTwo from "../components/QesCardTwo";
@@ -132,7 +133,14 @@ const GroupRatings = () => {
       throw json({ message: "Could not authenticate user." }, { status: 500 });
     }
     const resData = await res.json();
-    if (resData.ranking) {
+    if (!resData.ranking) {
+      return navigate("/");
+    }
+    let rankListParsed = parseGroupsConflict(resData?.data?.rank_list);
+    let isConflict = rankListParsed.some(
+      (item) => item[1] === groupRatingsData
+    );
+    if (isConflict) {
       setIsConflict(true);
       setDataConflict(resData?.data?.rank_list);
     } else {
