@@ -136,9 +136,14 @@ const GroupRatings = () => {
       throw json({ message: "Could not authenticate user." }, { status: 500 });
     }
     const resData = await res.json();
-    console.log(resData);
-    if (resData.ranking) {
-      console.log(5464646);
+    if (!resData.ranking) {
+      return navigate("/");
+    }
+    let rankListParsed = parseGroupsConflict(resData?.data?.rank_list);
+    let isConflict = rankListParsed.some(
+      (item) => item[1] === groupRatingsData
+    );
+    if (isConflict) {
       setIsConflict(true);
       setDataConflict(resData?.data?.rank_list);
     } else {

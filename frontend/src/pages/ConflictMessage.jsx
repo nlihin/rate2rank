@@ -12,7 +12,7 @@ const getGroupData = async (groupNum) => {
   const token1 = tokenLoader();
   const baseURL = "https://rate2rank-0d561bf6674a.herokuapp.com/";
   let groupResDate;
-  let groupRes = await fetch(baseURL + "rate/" + groupNum, {
+  let groupRes = await fetch(`${baseURL}/rate?group_number=${groupNum}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
