@@ -79,6 +79,6 @@ def rate_page():
         if int(elem[1]) < data['rate']:
             list_rank.insert(index, ((int(group_number), rate)))
 
-    exs_rank.list_rank = list_rank
+    exs_rank.list_rank = repr(list_rank)
     db.session.commit()
     return jsonify(status=200, ranking=False)
