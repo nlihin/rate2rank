@@ -76,7 +76,7 @@ def rate_page():
             return jsonify(status=200, ranking=True, data={"rank_list": exs_rank.list_rank})
 
     for index, elem in enumerate(list_rank):
-        if int(elem[1]) < rate:
+        if int(elem[1]) < data['rate']:
             list_rank.insert(index, ((int(group_number), rate)))
 
     exs_rank.list_rank = list_rank
