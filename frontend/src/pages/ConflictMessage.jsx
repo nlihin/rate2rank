@@ -12,7 +12,7 @@ import { BaseURL } from "../routes/url";
 const getGroupData = async (groupNum) => {
   const token1 = tokenLoader();
   let groupResDate;
-  let groupRes = await fetch(BaseURL + "rate/" + groupNum, {
+  let groupRes = await fetch(`${BaseURL}/rate?group_number=${groupNum}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
