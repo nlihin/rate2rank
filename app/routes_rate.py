@@ -61,12 +61,24 @@ def rate_page():
     # ToDo add check if same rates
     exs_rank = Rank.query.filter_by(username=current_user.username, date=datetime.today().date()).first()
 
-    # if users first input insert ranking to db
+      # if users first input insert ranking to db
     if not exs_rank:
         t = [(group_number, rate.rate)]
         rank = Rank(username=current_user.username, date=datetime.today().date(), list_rank=repr(t))
         db.session.add(rank)
         db.session.commit()
         return jsonify(status=200, ranking=False)
-    else:
-        return jsonify(status=200, ranking=True, data={"rank_list": exs_rank.list_rank})
+    #check for conflicts.
+    from ast import literal_eval
+    list_rank = literal_eval(exs_rank.list_rank)
+    for rank in list_rank:
+        if rank[1] == rate:
+            return jsonify(status=200, ranking=True, data={"rank_list": exs_rank.list_rank})
+
+    for index, elem in enumerate(list_rank):
+        if int(elem[1]) < rate:
+            list_rank.insert(index, ((int(group_number), rate)))
+
+    exs_rank.list_rank = list_rank
+    db.session.commit()
+    return jsonify(status=200, ranking=False)
