@@ -55,13 +55,6 @@ const ConflictMessage = ({
 
   useEffect(() => {
     const convertedGroups = parseGroupsConflict(groups);
-    // const indexs = [];
-    // const result = [[], [], []];
-    // convertedGroups?.forEach((group, index) => {
-    //   if (group[1] === groupRatingsData) {
-    //     indexs.push(index);
-    //   }
-    // });
     const firstList = [];
     const secondList = [];
     const thirdList = [];
@@ -77,6 +70,10 @@ const ConflictMessage = ({
         thirdList.push([first, second]);
       }
     }
+    console.log(convertedGroups);
+    console.log(firstList);
+    console.log(secondList);
+    console.log(thirdList);
     setConvertedGroups(convertedGroups);
     setFirstTempGroups(firstList);
     setSecondTempGroups(secondList);
