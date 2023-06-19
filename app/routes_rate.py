@@ -75,15 +75,16 @@ def rate_page():
         if rank[1] == rate:
             return jsonify(status=200, ranking=True, data={"rank_list": exs_rank.list_rank})
 
-    flag = False #check if inserted to list
+    flag = False  # check if inserted to list
     copy_list_rank = list_rank.copy()
     for index, elem in enumerate(list_rank):
-        print(elem[1] , data['rate'])
+        print(elem[1], data['rate'])
         if int(elem[1]) < data['rate']:
             copy_list_rank.insert(index, ((int(group_number), data['rate'])))
+            flag=True
+            break
     if not flag:
         copy_list_rank.append((int(group_number), data['rate']))
-            
 
     exs_rank.list_rank = repr(copy_list_rank)
     db.session.commit()
