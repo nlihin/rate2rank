@@ -72,7 +72,7 @@ def rate_page():
     from ast import literal_eval
     list_rank = literal_eval(exs_rank.list_rank)
     for rank in list_rank:
-        if rank[1] == rate:
+        if rank[1] == data['rate']:
             return jsonify(status=200, ranking=True, data={"rank_list": exs_rank.list_rank})
 
     flag = False  # check if inserted to list
