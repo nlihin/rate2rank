@@ -55,19 +55,34 @@ const ConflictMessage = ({
 
   useEffect(() => {
     const convertedGroups = parseGroupsConflict(groups);
-    const indexs = [];
-    convertedGroups?.forEach((group, index) => {
-      if (group[1] === groupRatingsData) {
-        indexs.push(index);
+    // const indexs = [];
+    // const result = [[], [], []];
+    // convertedGroups?.forEach((group, index) => {
+    //   if (group[1] === groupRatingsData) {
+    //     indexs.push(index);
+    //   }
+    // });
+    const firstList = [];
+    const secondList = [];
+    const thirdList = [];
+
+    for (let i = 0; i < convertedGroups.length; i++) {
+      const [first, second] = convertedGroups[i];
+
+      if (second === groupRatingsData) {
+        secondList.push([first, second]);
+      } else if (second < groupRatingsData) {
+        firstList.push([first, second]);
+      } else {
+        thirdList.push([first, second]);
       }
-    });
-    let tempGrops = convertedGroups?.slice(indexs[0], indexs.length);
+    }
     setConvertedGroups(convertedGroups);
-    setFirstTempGroups(convertedGroups?.slice(0, indexs[0]));
-    setSecondTempGroups(tempGrops);
-    setThirdTempGroups(convertedGroups?.slice(indexs.length));
+    setFirstTempGroups(firstList);
+    setSecondTempGroups(secondList);
+    setThirdTempGroups(thirdList);
     setCurrentIndex(0);
-    displayNameGroup(tempGrops[0][0]);
+    displayNameGroup(secondList[0][0]);
   }, [groups]); //changes
 
   const finishConflict = async (orderdConflict, numberOfPrompex) => {

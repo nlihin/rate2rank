@@ -137,10 +137,10 @@ const GroupRatings = () => {
       return navigate("/");
     }
     let rankListParsed = parseGroupsConflict(resData?.data?.rank_list);
-    let isConflict = rankListParsed.some(
-      (item) => item[1] === groupRatingsData
+    let hasConflict = rankListParsed.some(
+      (item) => parseInt(item[1]) === parseInt(groupRatingsData)
     );
-    if (isConflict) {
+    if (hasConflict) {
       setIsConflict(true);
       setDataConflict(resData?.data?.rank_list);
     } else {
