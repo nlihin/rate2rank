@@ -7,7 +7,6 @@ import { BaseURL } from "../routes/url";
 
 const getAvailGroups = async () => {
   const token1 = tokenLoader();
-  // TODO: save base url in constants and import
   const res = await fetch(BaseURL + "group", {
     method: "GET",
     headers: {
