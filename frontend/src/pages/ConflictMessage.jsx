@@ -65,15 +65,11 @@ const ConflictMessage = ({
       if (second === groupRatingsData) {
         secondList.push([first, second]);
       } else if (second < groupRatingsData) {
-        firstList.push([first, second]);
-      } else {
         thirdList.push([first, second]);
+      } else {
+        firstList.push([first, second]);
       }
     }
-    console.log(convertedGroups);
-    console.log(firstList);
-    console.log(secondList);
-    console.log(thirdList);
     setConvertedGroups(convertedGroups);
     setFirstTempGroups(firstList);
     setSecondTempGroups(secondList);
